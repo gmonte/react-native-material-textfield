@@ -11,7 +11,7 @@ export default class Helper extends PureComponent {
 
     disabled: PropTypes.bool,
 
-    style: Text.propType,
+    style: Animated.Text.propTypes.style,
 
     baseColor: PropTypes.string,
     errorColor: PropTypes.string,
@@ -22,7 +22,7 @@ export default class Helper extends PureComponent {
   constructor(props) {
     super(props);
 
-    let {error, focusAnimation} = this.props;
+    let { error, focusAnimation } = this.props;
 
     let opacity = focusAnimation.interpolate({
       inputRange: [-1, -0.5, 0],
@@ -37,34 +37,44 @@ export default class Helper extends PureComponent {
   }
 
   componentDidMount() {
-    let {focusAnimation} = this.props;
+    let { focusAnimation } = this.props;
 
-    this.listener = focusAnimation.addListener(this.onAnimation.bind(this));
+    this.listener = focusAnimation
+      .addListener(this.onAnimation.bind(this));
   }
 
   componentWillUnmount() {
-    let {focusAnimation} = this.props;
+    let { focusAnimation } = this.props;
 
     focusAnimation.removeListener(this.listener);
   }
 
-  onAnimation({value}) {
+  onAnimation({ value }) {
     if (this.animationValue > -0.5 && value <= -0.5) {
-      this.setState({errored: true});
+      this.setState({ errored: true });
     }
 
     if (this.animationValue < -0.5 && value >= -0.5) {
-      this.setState({errored: false});
+      this.setState({ errored: false });
     }
 
     this.animationValue = value;
   }
 
   render() {
-    let {errored, opacity} = this.state;
-    let {style, title, error, disabled, baseColor, errorColor} = this.props;
+    let { errored, opacity } = this.state;
+    let {
+      style,
+      title,
+      error,
+      disabled,
+      baseColor,
+      errorColor,
+    } = this.props;
 
-    let text = errored ? error : title;
+    let text = errored?
+      error:
+      title;
 
     if (null == text) {
       return null;
@@ -73,7 +83,9 @@ export default class Helper extends PureComponent {
     let textStyle = {
       opacity,
 
-      color: !disabled && errored ? errorColor : baseColor,
+      color: !disabled && errored?
+        errorColor:
+        baseColor,
     };
 
     return (

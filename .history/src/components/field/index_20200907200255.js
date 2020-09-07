@@ -117,14 +117,8 @@ export default class TextField extends PureComponent {
     prefix: PropTypes.string,
     suffix: PropTypes.string,
 
-    containerStyle: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object)
-    ]),
-    inputContainerStyle: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object)
-    ])
+    containerStyle: (ViewPropTypes || View.propTypes).style,
+    inputContainerStyle: (ViewPropTypes || View.propTypes).style,
   };
 
   static inputContainerStyle = styles.inputContainer;
